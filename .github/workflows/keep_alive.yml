@@ -1,0 +1,27 @@
+# 文件名：.github/workflows/keep_alive.yml
+name: 自动保活仓库
+
+# 触发条件：每月1号 + 手动触发
+on:
+  schedule:
+    - cron: '0 0 1 */1 *'  # 每月1号运行（避免60天禁用）
+  workflow_dispatch:  # 手动触发（测试用）
+
+permissions:
+  contents: write
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: 配置Git信息
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+      - name: 创建空提交并推送
+        run: |
+          git commit --allow-empty -m "chore: 自动保活 - 重置工作流计时器"
+          git push
