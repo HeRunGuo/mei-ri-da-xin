@@ -1,0 +1,31 @@
+# 文件名：.github/workflows/push_bonds_daily.yml
+name: push_bonds_daily
+
+# 👇 全局设置时区为 北京时间（所有步骤都生效）
+env:
+  TZ: Asia/Shanghai
+
+# 触发条件：代码推送 + 每日北京时间5点定时运行
+on:
+  push:
+  schedule:
+    - cron: '0 21 * * *'  # UTC 21:00 = 北京时间 次日 05:00
+
+# 权限
+permissions:
+  issues: write
+  contents: write
+
+jobs:
+  daily-push:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      run: pip install requests
+    - name: Run Bonds Script
+      run: python bonds.py
