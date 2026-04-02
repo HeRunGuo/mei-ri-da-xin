@@ -200,6 +200,7 @@ def generate_reminder_content(raw_list, ambush_list):
         <table border="1" cellspacing="0" cellpadding="6" style="width:100%;text-align:center;border-collapse:collapse;">
             <tr style="background:#f5f5f5;">
                 <th>正股名称</th>
+                <th>正股代码</th>
                 <th>百元含权>10(元)</th>
                 <th>市净率1-2(PB)</th>
                 <th>近期涨跌幅<20(%)</th>
@@ -218,6 +219,7 @@ def generate_reminder_content(raw_list, ambush_list):
             html.append(f'''
             <tr>
                 <td>{item["正股名称"]}</td>
+                <td>{item["正股代码"]}</td>
                 <td>{item["百元含权(元)"]:.2f}</td>
                 <td>{item["市净率(PB)"]:.2f}</td>
                 <td>{item["近期涨跌幅(%)"]:.2f}</td>
