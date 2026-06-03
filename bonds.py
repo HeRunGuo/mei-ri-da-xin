@@ -161,10 +161,11 @@ def generate_reminder_content(raw_list, ambush_list):
 
     if today_sub:
         html.append('<p><font color="red">【今日申购】</font></p>')
+        for item in today_sub:
+            html.append(f'<p>{item["转债名称"]}({item["转债代码"]})|⚛️{item["正股名称"]}({item["正股代码"]})</p>')
     if today_list:
         html.append('<p><font color="red">【今日上市】</font></p>')
-        all_today = today_sub + today_list
-        for item in all_today:
+        for item in today_list:
             html.append(f'<p>{item["转债名称"]}({item["转债代码"]})|⚛️{item["正股名称"]}({item["正股代码"]})</p>')
             
     # 2. 未来计划
@@ -174,10 +175,12 @@ def generate_reminder_content(raw_list, ambush_list):
 
     if future_sub:
         html.append('<p><font color="green">【待申购】</font></p>')
+        for item in future_sub:
+            dt_str = item["核准日期"].strftime("%Y-%m-%d")
+            html.append(f'<p>{dt_str}|⚛️{item["正股名称"]}({item["正股代码"]})|⚛️{item["转债名称"]}</p>')
     if future_list:
         html.append('<p><font color="green">【待上市】</font></p>')
-        future_all = future_sub + future_list
-        for item in future_all:
+        for item in future_list:
             dt_str = item["核准日期"].strftime("%Y-%m-%d")
             html.append(f'<p>{dt_str}|⚛️{item["正股名称"]}({item["正股代码"]})|⚛️{item["转债名称"]}</p>')
 
